@@ -45,13 +45,19 @@ public class BadSaucePageTest {
     }
 
     @Test
-    void testLogout() {
+    void testAnadirProductoAlCarrito() {
         driver.get("https://www.saucedemo.com/");
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
         driver.findElement(By.id("login-button")).click();
 
-        page.logout(driver);
-        Assertions.assertTrue(driver.getCurrentUrl().contains("saucedemo"));
+        // Añadir un producto
+        driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
+
+        // Verificar que el carrito muestra "1"
+        WebElement badge = driver.findElement(By.className("shopping_cart_badge"));
+        Assertions.assertEquals("1", badge.getText());
     }
+
+
 }
