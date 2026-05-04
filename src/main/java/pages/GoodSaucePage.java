@@ -1,6 +1,6 @@
 package pages;
 import org.openqa.selenium.*;
-import org .openqa.selenium.chrome.ChromeDriver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +11,7 @@ public class GoodSaucePage {
     public GoodSaucePage(WebDriver driver) {
         this.driver = driver;
     }
+
     // ❌ NO Large Class + Long Method + Duplicate Code + Dead Code First we will use shorter methods
 
     // ❌ NO Feature Envy, just a shorter method with only one responsability

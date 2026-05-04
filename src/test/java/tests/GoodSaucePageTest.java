@@ -1,12 +1,7 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pages.GoodSaucePage;
@@ -22,9 +17,8 @@ public class GoodSaucePageTest {
     void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
-
         driver = new ChromeDriver(options);
-        page = new GoodSaucePage(driver);   // ✔ ahora sí: constructor correcto
+        page = new GoodSaucePage(driver);
     }
 
     @AfterEach
@@ -35,19 +29,44 @@ public class GoodSaucePageTest {
     }
 
     @Test
-    void testCheckoutFlow() {
-        page.login("standard_user", "secret_sauce");
-        page.goToInventory();
-        page.addToCart("add-to-cart-sauce-labs-backpack");
-        page.addToCart("add-to-cart-sauce-labs-bike-light");
-        page.openCart();
-        page.checkout("Marina", "Test", "29000");
+    void testLoginIncorrecto() {
+        page.login("standard_user", "wrong_password");
 
-        Assertions.assertTrue(driver.getCurrentUrl().contains("checkout-complete"));
+        WebElement error = driver.findElement(By.cssSelector("h3[data-test='error']"));
+
+        Assertions.assertTrue(
+                error.getText().contains("Username and password do not match"),
+                "Should show an error message for invalid login"
+        );
     }
+
+
 
     @Test
     void testGetAllProductNames() {
-        page.login("standard_user", "secret_sauce");
+        driver.get("https://www.saucedemo.com/");
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.findElement(By.id("login-button")).click();
+
+        List<String> names = page.getAllProductNames();
+        Assertions.assertFalse(names.isEmpty());
     }
+
+    @Test
+    void testAnadirProductoAlCarrito() {
+        driver.get("https://www.saucedemo.com/");
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.findElement(By.id("login-button")).click();
+
+        // Añadir un producto
+        driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
+
+        // Verificar que el carrito muestra "1"
+        WebElement badge = driver.findElement(By.className("shopping_cart_badge"));
+        Assertions.assertEquals("1", badge.getText());
+    }
+
+
 }
