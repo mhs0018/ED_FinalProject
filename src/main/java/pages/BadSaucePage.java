@@ -7,10 +7,10 @@ import java.util.List;
 
     public class BadSaucePage {
 
-        // ❌ Temporary Field (solo se usa en un método)
+        // ❌ Temporary Field (only use a metod)
         public String temporalMessage;
 
-        // ❌ Large Class + Long Method + Duplicate Code + Dead Code
+        // ❌ No Large Class + Long Method + Duplicate Code + Dead Code.
         public void doEverything(WebDriver driver, String username, String password) {
             try {
                 // ❌ Feature Envy: la clase depende demasiado del driver
@@ -46,13 +46,14 @@ import java.util.List;
                         System.out.println("Nada que hacer");
                 }
 
-                // ❌ Shotgun Surgery: si cambia un selector, hay que cambiarlo en 20 sitios
+                // ❌ NO Shotgun Surgery: si cambia un selector, hay que cambiarlo en 20 sitios
                 driver.findElement(By.id("checkout")).click();
                 driver.findElement(By.id("first-name")).sendKeys("Marina");
                 driver.findElement(By.id("last-name")).sendKeys("Test");
                 driver.findElement(By.id("postal-code")).sendKeys("29000");
                 driver.findElement(By.id("continue")).click();
                 driver.findElement(By.id("finish")).click();
+
 
             } catch (Exception e) {
                 System.out.println("Error general: " + e.getMessage());

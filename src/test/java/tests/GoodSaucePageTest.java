@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pages.GoodSaucePage;
+
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class GoodSaucePageTest {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--incognito");
             driver = new ChromeDriver(options);
-            page = new BadSaucePage();
+            page = new GoodSaucePage();
         }
 
         @AfterEach
